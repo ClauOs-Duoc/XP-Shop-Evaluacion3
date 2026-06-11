@@ -19,10 +19,13 @@ import com.XP_Shop.Bloque_Boleta.dto.BoletaDTO;
 import com.XP_Shop.Bloque_Boleta.model.Boleta;
 import com.XP_Shop.Bloque_Boleta.service.BoletaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/boleta")
+@Tag(name = "Boleta Controller", description = "Endpoints para la gestión de boletas")
 public class BoletaController {
 
     @Autowired
@@ -35,6 +38,15 @@ public class BoletaController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(boleta, HttpStatus.OK);
+    }
+    @GetMapping
+    @Operation(summary = "Listar todas las boletas", description = "Obtiene una lista de todas las boletas disponibles")
+    public ResponseEntity<List<BoletaDTO>> listarBoletas() {
+        List<BoletaDTO> boletas = boletaService.listarBoleta();
+        if (boletas.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(boletas, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

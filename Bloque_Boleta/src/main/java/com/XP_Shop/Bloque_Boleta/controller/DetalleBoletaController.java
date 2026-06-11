@@ -19,14 +19,19 @@ import com.XP_Shop.Bloque_Boleta.dto.DetalleBoletaDTO;
 import com.XP_Shop.Bloque_Boleta.model.DetalleBoleta;
 import com.XP_Shop.Bloque_Boleta.service.DetalleBoletaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/detalleBoleta")
+@Tag(name = "Detalle Boleta Controller", description = "Endpoints para la gestión de detalles de boletas")
 public class DetalleBoletaController {
 
     @Autowired
     private DetalleBoletaService detalleBoletaService;
 
     @GetMapping
+    @Operation(summary = "Listar todos los detalles de boletas", description = "Obtiene una lista de todos los detalles de boletas disponibles")
     public ResponseEntity<List<DetalleBoletaDTO>> todosLosDetalleBoleta() {
         List<DetalleBoletaDTO> detalleBoleta = detalleBoletaService.listarDetalleBoleta();
         if (detalleBoleta.isEmpty()) {
@@ -34,9 +39,11 @@ public class DetalleBoletaController {
         }
         return new ResponseEntity<>(detalleBoleta, HttpStatus.OK);
     }
+    
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalleBoletaDTO> buscarPorId(Integer id){
+    @Operation(summary = "Buscar detalle de boleta por ID", description = "Obtiene un detalle de boleta específico por su ID")
+    public ResponseEntity<DetalleBoletaDTO> buscarPorId(@PathVariable Integer id){
         try {
             DetalleBoletaDTO detalleBoleta = detalleBoletaService.buscarDetalleBoletaPorId(id);
             return new ResponseEntity<>(detalleBoleta, HttpStatus.OK);
@@ -46,6 +53,7 @@ public class DetalleBoletaController {
     }
 
     @PostMapping
+    @Operation(summary = "Agregar detalle de boleta", description = "Crea un nuevo detalle de boleta")
     public ResponseEntity<DetalleBoleta> agregarDetalleBoleta(@RequestBody DetalleBoleta detalleBoleta) {
         try {
             detalleBoletaService.guardarDetalleBoleta(detalleBoleta);
@@ -56,6 +64,7 @@ public class DetalleBoletaController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Editar detalle de boleta", description = "Actualiza un detalle de boleta específico por su ID")
     public ResponseEntity<DetalleBoleta> editarRegiom(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta) {
         try {
             detalleBoletaService.guardarDetalleBoleta(detalleBoleta);
@@ -66,6 +75,7 @@ public class DetalleBoletaController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar detalle de boleta", description = "Actualiza un detalle de boleta específico por su ID")
     public ResponseEntity<DetalleBoleta> actualizarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta){
         try{
             detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
@@ -76,6 +86,7 @@ public class DetalleBoletaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar detalle de boleta", description = "Elimina un detalle de boleta específico por su ID")
     public ResponseEntity<String> eliminarDetalleBoleta(@PathVariable Integer id) {
         try {
             detalleBoletaService.eliminarDetalleBoleta(id);
