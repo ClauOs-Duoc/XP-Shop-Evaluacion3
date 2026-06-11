@@ -1,4 +1,4 @@
-package com.XP_Shop.Bloque_Producto.config;
+package com.XP_Shop.Bloque_Boleta.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,15 +7,15 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 
 @Configuration
-public class SwaggerConfig {
+public class swaggerConfig {
 
     @Bean
-    public OpenAPI customOpenAPI{
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API 2026 Bloque Productos XP-Shop")
+                        .title("XP Shop - Bloque Boleta API")
                         .version("1.0")
-                        .description("Documentacion de la API del bloque productos de XP_Shop"));
+                        .description("API para la gestión de boletas en XP Shop"));
     }
 
 }
