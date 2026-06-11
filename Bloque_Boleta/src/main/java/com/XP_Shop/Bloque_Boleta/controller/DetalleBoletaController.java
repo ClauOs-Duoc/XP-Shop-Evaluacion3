@@ -27,8 +27,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Detalle Boleta Controller", description = "Endpoints para la gestión de detalles de boletas")
 public class DetalleBoletaController {
 
-    @Autowired
-    private DetalleBoletaService detalleBoletaService;
+    private final DetalleBoletaService detalleBoletaService;
+
+    DetalleBoletaController(DetalleBoletaService detalleBoletaService) {
+        this.detalleBoletaService = detalleBoletaService;
+    }
 
     @GetMapping
     @Operation(summary = "Listar todos los detalles de boletas", description = "Obtiene una lista de todos los detalles de boletas disponibles")

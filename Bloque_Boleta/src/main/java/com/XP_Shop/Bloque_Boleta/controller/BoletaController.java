@@ -2,7 +2,6 @@ package com.XP_Shop.Bloque_Boleta.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +27,11 @@ import jakarta.validation.Valid;
 @Tag(name = "Boleta Controller", description = "Endpoints para la gestión de boletas")
 public class BoletaController {
 
-    @Autowired
-    private BoletaService boletaService;
+    private final BoletaService boletaService;
+
+    BoletaController(BoletaService boletaService) {
+        this.boletaService = boletaService;
+    }
 
     @GetMapping
     public ResponseEntity<List<BoletaDTO>> listarBoleta() {

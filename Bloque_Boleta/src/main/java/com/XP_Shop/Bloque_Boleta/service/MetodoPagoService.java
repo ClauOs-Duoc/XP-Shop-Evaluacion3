@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Boleta.dto.MetodoPagoDTO;
@@ -21,8 +20,11 @@ public class MetodoPagoService {
 
     private static final Logger log = LoggerFactory.getLogger(MetodoPagoService.class);
 
-    @Autowired
-    private MetodoPagoRepository metodoPagoRepository;
+    private final MetodoPagoRepository metodoPagoRepository;
+
+    MetodoPagoService(MetodoPagoRepository metodoPagoRepository) {
+        this.metodoPagoRepository = metodoPagoRepository;
+    }
 
     private MetodoPagoDTO convertirMetodoPagoADTO(MetodoPago metodoPago){
         log.info("Convirtiendo metodo de pago a DTO: {}", metodoPago.getNombreMetodoPago());

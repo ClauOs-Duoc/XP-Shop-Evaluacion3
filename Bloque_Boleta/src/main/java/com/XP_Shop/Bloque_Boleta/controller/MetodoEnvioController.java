@@ -2,7 +2,6 @@ package com.XP_Shop.Bloque_Boleta.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,8 +26,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Metodo Envio Controller", description = "Endpoints para la gestión de métodos de envío")
 public class MetodoEnvioController {
 
-    @Autowired
-    private MetodoEnvioService metodoEnvioService;
+    private final MetodoEnvioService metodoEnvioService;
+
+    MetodoEnvioController(MetodoEnvioService metodoEnvioService) {
+        this.metodoEnvioService = metodoEnvioService;
+    }
 
     @GetMapping
     @Operation(summary = "Listar todos los métodos de envío", description = "Obtiene una lista de todos los métodos de envío disponibles")
