@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Boleta.dto.MetodoEnvioDTO;
@@ -21,8 +20,11 @@ public class MetodoEnvioService {
 
     private static final Logger log = LoggerFactory.getLogger(MetodoEnvioService.class);
 
-    @Autowired
-    private MetodoEnvioRepository metodoEnvioRepository;
+    private final MetodoEnvioRepository metodoEnvioRepository;
+
+    MetodoEnvioService(MetodoEnvioRepository metodoEnvioRepository) {
+        this.metodoEnvioRepository = metodoEnvioRepository;
+    }
 
     private MetodoEnvioDTO convertirMetodoEnvioADTO(MetodoEnvio metodoEnvio){
         log.info("Convirtiendo metodo de envio a DTO: {}", metodoEnvio.getNombreMetodoEnvio());

@@ -20,8 +20,11 @@ public class DetalleBoletaService {
     private static final Logger log = LoggerFactory.getLogger(DetalleBoletaService.class);
 
 
-    @Autowired
-    private DetalleBoletaRepository detalleBoletaRepository;
+    private final DetalleBoletaRepository detalleBoletaRepository;
+
+    DetalleBoletaService(DetalleBoletaRepository detalleBoletaRepository) {
+        this.detalleBoletaRepository = detalleBoletaRepository;
+    }
 
     private DetalleBoletaDTO convertirDetalleBoletaADTO(DetalleBoleta detalleBoleta){
         DetalleBoletaDTO dto = new DetalleBoletaDTO();
@@ -29,7 +32,7 @@ public class DetalleBoletaService {
         dto.setCantidad(detalleBoleta.getCantidad());
         dto.setSubtotal(detalleBoleta.getSubtotal());
         dto.setBoleta(detalleBoleta.getBoleta().getIdBoleta());
-        dto.setProductos(detalleBoleta.getProductos().getIdProductos());
+        dto.setProductos(detalleBoleta.getProductos().getIdProducto());
 
         return dto;
     }

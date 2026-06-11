@@ -2,7 +2,6 @@ package com.XP_Shop.Bloque_Boleta.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,14 +18,22 @@ import com.XP_Shop.Bloque_Boleta.dto.MetodoPagoDTO;
 import com.XP_Shop.Bloque_Boleta.model.MetodoPago;
 import com.XP_Shop.Bloque_Boleta.service.MetodoPagoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/metodoPago")
+@Tag(name = "Metodo Pago Controller", description = "Endpoints para la gestión de métodos de pago")
 public class MetodoPagoController {
 
-    @Autowired
-    private MetodoPagoService metodoPagoService;
+    private final MetodoPagoService metodoPagoService;
+
+    MetodoPagoController(MetodoPagoService metodoPagoService) {
+        this.metodoPagoService = metodoPagoService;
+    }
 
     @GetMapping
+    @Operation(summary = "Listar todos los métodos de pago", description = "Obtiene una lista de todos los métodos de pago disponibles")
     public ResponseEntity<List<MetodoPagoDTO>> todosLosMetodoPago() {
         List<MetodoPagoDTO> metodoPago = metodoPagoService.listarMetodoPago();
         if (metodoPago.isEmpty()) {
@@ -36,6 +43,7 @@ public class MetodoPagoController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar método de pago por ID", description = "Obtiene un método de pago específico por su ID")
     public ResponseEntity<MetodoPagoDTO> buscarPorId(Integer id){
         try {
             MetodoPagoDTO metodoPago = metodoPagoService.buscarMetodoPagoPorId(id);
@@ -46,6 +54,7 @@ public class MetodoPagoController {
     }
 
     @PostMapping
+    @Operation(summary = "Agregar método de pago", description = "Crea un nuevo método de pago")
     public ResponseEntity<MetodoPago> agregarMetodoPago(@RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
@@ -56,6 +65,7 @@ public class MetodoPagoController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Editar método de pago", description = "Actualiza un método de pago específico por su ID")
     public ResponseEntity<MetodoPago> editarRegiom(@PathVariable Integer id, @RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
@@ -66,6 +76,7 @@ public class MetodoPagoController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar método de pago", description = "Actualiza un método de pago específico por su ID")
     public ResponseEntity<MetodoPago> actualizarMetodoPago(@PathVariable Integer id, @RequestBody MetodoPago metodoPago){
         try{
             metodoPagoService.actualizarMetodoPago(id, metodoPago);
@@ -76,6 +87,7 @@ public class MetodoPagoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar método de pago", description = "Elimina un método de pago específico por su ID")
     public ResponseEntity<String> eliminarMetodoPago(@PathVariable Integer id) {
         try {
             metodoPagoService.eliminarMetodoPago(id);

@@ -8,4 +8,5 @@ import com.XP_Shop.Bloque_Boleta.model.Boleta;
 @Repository
 public interface BoletaRepository extends JpaRepository<Boleta, Integer>{
     
+    
 }
