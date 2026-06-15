@@ -6,14 +6,14 @@ CREATE TABLE categoria (
 
 CREATE TABLE categorias (
    idCategorias INT AUTO_INCREMENT PRIMARY KEY,
-   nombreCategoria VARCHAR(30) NOT NULL,
-   categorias_id INT NOT NULL
+   categoria INT NOT NULL,
+   producto INT NOT NULL
 );
 
 CREATE TABLE imagen (
    idImagen INT AUTO_INCREMENT PRIMARY KEY,
    nombreImagen VARCHAR(30) NOT NULL,
-   imagenId INT NOT NULL
+   productoId INT NOT NULL
 );
 
 CREATE TABLE marca (
@@ -24,8 +24,8 @@ CREATE TABLE marca (
 
 CREATE TABLE marcas (
    idMarcas INT AUTO_INCREMENT PRIMARY KEY,
-   nombreCategoria VARCHAR(30) NOT NULL,
-   categorias_id INT NOT NULL
+   marcas INT NOT NULL,
+   productos INT NOT NULL
 );
 
 CREATE TABLE producto (
@@ -42,6 +42,6 @@ CREATE TABLE producto (
 
 CREATE TABLE productos (
    idProductos INT AUTO_INCREMENT PRIMARY KEY,
-   nombreCategoria VARCHAR(30) NOT NULL,
-   precio DOUBLE(2000000) NOT NULL,
+   producto INT NOT NULL,
+   id_detalleBoletas INT NOT NULL
 );

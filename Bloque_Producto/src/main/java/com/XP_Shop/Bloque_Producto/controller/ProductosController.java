@@ -69,11 +69,12 @@ public class ProductosController {
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Productos> editarRegiom(@PathVariable Integer id, @RequestBody Productos productos) {
+    @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<Productos>> editarRegiom(@PathVariable Integer id, @RequestBody Productos productos) {
         try {
             productosService.guardarProductos(productos);
-            return new ResponseEntity<>(productos, HttpStatus.OK);
+            Productos productosPatch = productos;
+            return ResponseEntity.ok(assembler.toModel(productosPatch));
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -83,15 +84,15 @@ public class ProductosController {
     public ResponseEntity<EntityModel<Productos>> actualizarProductos(@PathVariable Integer id, @RequestBody Productos productos) {
         try{
             productosService.actualizarProductos(id, productos);
-            Productos productosUpdate = productosService.guardarProductos(productos)
+            Productos productosUpdate = productosService.guardarProductos(productos);
             return ResponseEntity.ok(assembler.toModel(productosUpdate));
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarProductos(@PathVariable Integer id) {
+    @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<?> eliminarProductos(@PathVariable Integer id) {
         try {
             productosService.eliminarProductos(id);
             return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
