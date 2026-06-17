@@ -1,8 +1,15 @@
 package com.XP_Shop.Bloque_Producto.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.XP_Shop.Bloque_Producto.assemblers.CategoriasModelAssemble;
 import com.XP_Shop.Bloque_Producto.model.Categorias;
+import com.XP_Shop.Bloque_Producto.model.Marcas;
 import com.XP_Shop.Bloque_Producto.service.CategoriasService;
-
-
 
 @RestController
 @RequestMapping("/api/v1/categorias")
@@ -27,50 +34,58 @@ public class CategoriasController {
     @Autowired
     private CategoriasService categoriasService;
 
-    @GetMapping
-    public ResponseEntity<List<Categorias>> todasLasCategorias() {
-        List<Categorias> categorias = categoriasService.listaCategorias();
-        if (categorias.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(categorias, HttpStatus.OK);
+    @Autowired
+    private CategoriasModelAssemble assembler;
+
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public CollectionModel<EntityModel<Categorias>> todasLasCategorias(){
+        List<EntityModel<Categorias>> categorias = categoriasService.listaCategorias().stream()
+            .map(assembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(categorias,
+            linkTo(methodOn(CategoriasController.class).todasLasCategorias()).withSelfRel());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Categorias> buscarPorId(Integer id){
+    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<Categorias>> buscarPorId(Integer id){
         try {
             Categorias categorias = categoriasService.buscarCategoriasPorId(id);
-            return new ResponseEntity<>(categorias, HttpStatus.OK);
+            return ResponseEntity.ok(assembler.toModel(categorias));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Categorias> agregarCategorias(@RequestBody Categorias categorias) {
+    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<Categorias>> agregarCategorias(@RequestBody Categorias categorias) {
         try {
-            categoriasService.guardarCategorias(categorias);
-            return new ResponseEntity<>(categorias, HttpStatus.CREATED);
+            Categorias newCategorias = categoriasService.guardarCategorias(categorias);
+            return ResponseEntity
+                .created(linkTo(methodOn(ProductoController.class).buscarPorId(newCategorias.getIdCategorias())).toUri())
+                .body(assembler.toModel(newCategorias));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Categorias> editarRegiom(@PathVariable Integer id, @RequestBody Categorias categorias) {
+    @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<Categorias>> editarCategoria(@PathVariable Integer id, @RequestBody Marcas marcas) {
         try {
-            categoriasService.guardarCategorias(categorias);
-            return new ResponseEntity<>(categorias, HttpStatus.OK);
+            marcasService.guardarMarcas(marcas);
+            Marcas marcasPatch = marcas;
+            return ResponseEntity.ok(assembler.toModel(marcasPatch));
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Categorias> actualizarCategorias(@PathVariable Integer id, @RequestBody Categorias categorias) {
+    @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<Marcas>> actualizarMarcas(@PathVariable Integer id, @RequestBody Marcas marcas) {
         try{
-            categoriasService.actualizarCategorias(id, categorias);
-            return new ResponseEntity<>(categorias, HttpStatus.OK);
+            marcasService.actualizarMarcas(id, marcas);
+            Marcas marcasUpdate = marcasService.guardarMarcas(marcas);
+            return ResponseEntity.ok(assembler.toModel(marcasUpdate));
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

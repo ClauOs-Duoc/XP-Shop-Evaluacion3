@@ -1,8 +1,15 @@
 package com.XP_Shop.Bloque_Producto.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.XP_Shop.Bloque_Producto.assemblers.ImagenModelAssemble;
 import com.XP_Shop.Bloque_Producto.dto.ImagenDTO;
 import com.XP_Shop.Bloque_Producto.model.Imagen;
 import com.XP_Shop.Bloque_Producto.service.ImagenService;
@@ -27,13 +35,17 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
 
-    @GetMapping
-    public ResponseEntity<List<ImagenDTO>> todasLasImagen() {
-        List<ImagenDTO> imagen = imagenService.listarImagen();
-        if (imagen.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(imagen, HttpStatus.OK);
+    @Autowired
+    private ImagenModelAssemble assembler;
+
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public CollectionModel<EntityModel<ImagenDTO>> todasLasImagen(){
+        List<EntityModel<ImagenDTO>> imagen = imagenService.listarImagen().stream()
+            .map(assembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(imagen,
+            linkTo(methodOn(ImagenController.class).todasLasImagen()).withSelfRel());
     }
 
     @GetMapping("/{id}")

@@ -1,8 +1,15 @@
 package com.XP_Shop.Bloque_Producto.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.XP_Shop.Bloque_Producto.assemblers.MarcaModelAssemble;
 import com.XP_Shop.Bloque_Producto.dto.MarcaDTO;
 import com.XP_Shop.Bloque_Producto.model.Marca;
 import com.XP_Shop.Bloque_Producto.service.MarcaService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/marca")
@@ -28,30 +34,36 @@ public class MarcaController {
     @Autowired
     private MarcaService marcaService;
 
-    @GetMapping
-    public ResponseEntity<List<MarcaDTO>> todasLaMarca() {
-        List<MarcaDTO> marca = marcaService.listarMarca();
-        if (marca.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(marca, HttpStatus.OK);
+    @Autowired
+    private MarcaModelAssemble assembler;
+
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public CollectionModel<EntityModel<MarcaDTO>> todasLasMarca(){
+        List<EntityModel<MarcaDTO>> marca = marcaService.listarMarca().stream()
+            .map(assembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(marca,
+            linkTo(methodOn(MarcaController.class).todasLasMarca()).withSelfRel());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MarcaDTO> buscarPorId(Integer id){
+    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<MarcaDTO>> buscarPorId(Integer id){
         try {
             MarcaDTO marca = marcaService.buscarMarcaPorId(id);
-            return new ResponseEntity<>(marca, HttpStatus.OK);
+            return ResponseEntity.ok(assembler.toModel(marca));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Marca> agregarMarca(@Valid @RequestBody Marca marca) {
+    @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<EntityModel<MarcaDTO>> agregarMarca(@RequestBody Marca marca) {
         try {
-            marcaService.guardarMarca(marca);
-            return new ResponseEntity<>(marca, HttpStatus.CREATED);
+            MarcaDTO newMarca = marcaService.guardarMarca(marca);
+            return ResponseEntity
+                .created(linkTo(methodOn(MarcaController.class).buscarPorId(newMarca.getIdMarca())).toUri())
+                .body(assembler.toModel(newMarca));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -77,8 +89,8 @@ public class MarcaController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarMarca(@PathVariable Integer id) {
+    @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public ResponseEntity<?> eliminarMarca(@PathVariable Integer id) {
         try {
             marcaService.eliminarMarca(id);
             return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
