@@ -33,7 +33,7 @@ public class MetodoPagoController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos los métodos de pago", description = "Obtiene una lista de todos los métodos de pago disponibles")
+    @Operation(summary = "Listar todos los metodos de pago", description = "Obtiene una lista de todos los metodos de pago disponibles")
     public ResponseEntity<List<MetodoPagoDTO>> todosLosMetodoPago() {
         List<MetodoPagoDTO> metodoPago = metodoPagoService.listarMetodoPago();
         if (metodoPago.isEmpty()) {
@@ -43,7 +43,7 @@ public class MetodoPagoController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar método de pago por ID", description = "Obtiene un método de pago específico por su ID")
+    @Operation(summary = "Buscar metodo de pago por ID", description = "Obtiene un metodo de pago especifico por su ID")
     public ResponseEntity<MetodoPagoDTO> buscarPorId(Integer id){
         try {
             MetodoPagoDTO metodoPago = metodoPagoService.buscarMetodoPagoPorId(id);
@@ -54,7 +54,7 @@ public class MetodoPagoController {
     }
 
     @PostMapping
-    @Operation(summary = "Agregar método de pago", description = "Crea un nuevo método de pago")
+    @Operation(summary = "Agregar metodo de pago", description = "Crea un nuevo metodo de pago")
     public ResponseEntity<MetodoPago> agregarMetodoPago(@RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
@@ -65,8 +65,8 @@ public class MetodoPagoController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Editar método de pago", description = "Actualiza un método de pago específico por su ID")
-    public ResponseEntity<MetodoPago> editarRegiom(@PathVariable Integer id, @RequestBody MetodoPago metodoPago) {
+    @Operation(summary = "Editar metodo de pago", description = "Actualiza un metodo de pago especifico por su ID")
+    public ResponseEntity<MetodoPago> editarMetodoPago(@PathVariable Integer id, @RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
             return new ResponseEntity<>(metodoPago, HttpStatus.OK);
@@ -76,7 +76,7 @@ public class MetodoPagoController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar método de pago", description = "Actualiza un método de pago específico por su ID")
+    @Operation(summary = "Actualizar metodo de pago", description = "Actualiza un metodo de pago especifico por su ID")
     public ResponseEntity<MetodoPago> actualizarMetodoPago(@PathVariable Integer id, @RequestBody MetodoPago metodoPago){
         try{
             metodoPagoService.actualizarMetodoPago(id, metodoPago);
@@ -87,7 +87,7 @@ public class MetodoPagoController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar método de pago", description = "Elimina un método de pago específico por su ID")
+    @Operation(summary = "Eliminar metodo de pago", description = "Elimina un metodo de pago especifico por su ID")
     public ResponseEntity<String> eliminarMetodoPago(@PathVariable Integer id) {
         try {
             metodoPagoService.eliminarMetodoPago(id);

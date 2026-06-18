@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/detalleBoleta")
-@Tag(name = "Detalle Boleta Controller", description = "Endpoints para la gestión de detalles de boletas")
+@Tag(name = "Detalle Boleta Controller", description = "Endpoints para la gestion de detalles de boletas")
 public class DetalleBoletaController {
 
     private final DetalleBoletaService detalleBoletaService;
@@ -44,7 +44,7 @@ public class DetalleBoletaController {
     
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar detalle de boleta por ID", description = "Obtiene un detalle de boleta específico por su ID")
+    @Operation(summary = "Buscar detalle de boleta por ID", description = "Obtiene un detalle de boleta especifico por su ID")
     public ResponseEntity<DetalleBoletaDTO> buscarPorId(@PathVariable Integer id){
         try {
             DetalleBoletaDTO detalleBoleta = detalleBoletaService.buscarDetalleBoletaPorId(id);
@@ -66,7 +66,7 @@ public class DetalleBoletaController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Editar detalle de boleta", description = "Actualiza un detalle de boleta específico por su ID")
+    @Operation(summary = "Editar detalle de boleta", description = "Actualiza un detalle de boleta especifico por su ID")
     public ResponseEntity<DetalleBoleta> editarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta) {
         try {
             detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
@@ -77,7 +77,7 @@ public class DetalleBoletaController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar detalle de boleta", description = "Actualiza un detalle de boleta específico por su ID")
+    @Operation(summary = "Actualizar detalle de boleta", description = "Actualiza un detalle de boleta especifico por su ID")
     public ResponseEntity<DetalleBoleta> actualizarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta){
         try{
             detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
@@ -88,7 +88,7 @@ public class DetalleBoletaController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar detalle de boleta", description = "Elimina un detalle de boleta específico por su ID")
+    @Operation(summary = "Eliminar detalle de boleta", description = "Elimina un detalle de boleta especifico por su ID")
     public ResponseEntity<String> eliminarDetalleBoleta(@PathVariable Integer id) {
         try {
             detalleBoletaService.eliminarDetalleBoleta(id);

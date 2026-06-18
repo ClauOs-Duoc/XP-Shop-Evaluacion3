@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/metodoEnvio")
-@Tag(name = "Metodo Envio Controller", description = "Endpoints para la gestión de métodos de envío")
+@Tag(name = "Metodo Envio Controller", description = "Endpoints para la gestion de metodos de envio")
 public class MetodoEnvioController {
 
     private final MetodoEnvioService metodoEnvioService;
@@ -33,7 +33,7 @@ public class MetodoEnvioController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos los métodos de envío", description = "Obtiene una lista de todos los métodos de envío disponibles")
+    @Operation(summary = "Listar todos los metodos de envio", description = "Obtiene una lista de todos los métodos de envio disponibles")
     public ResponseEntity<List<MetodoEnvioDTO>> todosLosMetodoEnvio() {
         List<MetodoEnvioDTO> metodoEnvio = metodoEnvioService.listarMetodoEnvio();
         if (metodoEnvio.isEmpty()) {
@@ -43,7 +43,7 @@ public class MetodoEnvioController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar método de envío por ID", description = "Obtiene un método de envío específico por su ID")
+    @Operation(summary = "Buscar metodo de envío por ID", description = "Obtiene un metodo de envio especifico por su ID")
     public ResponseEntity<MetodoEnvioDTO> buscarPorId(@PathVariable Integer id){
         try {
             MetodoEnvioDTO metodoEnvio = metodoEnvioService.buscarMetodoEnvioPorId(id);
@@ -54,7 +54,7 @@ public class MetodoEnvioController {
     }
 
     @PostMapping
-    @Operation(summary = "Agregar método de envío", description = "Crea un nuevo método de envío")
+    @Operation(summary = "Agregar metodo de envio", description = "Crea un nuevo método de envio")
     public ResponseEntity<MetodoEnvio> agregarMetodoEnvio(@RequestBody MetodoEnvio metodoEnvio) {
         try {
             metodoEnvioService.guardarMetodoEnvio(metodoEnvio);
@@ -65,8 +65,8 @@ public class MetodoEnvioController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Editar método de envío", description = "Actualiza un método de envío específico por su ID")
-    public ResponseEntity<MetodoEnvio> editarRegiom(@PathVariable Integer id, @RequestBody MetodoEnvio metodoEnvio) {
+    @Operation(summary = "Editar metodo de envio", description = "Actualiza un metodo de envio especifico por su ID")
+    public ResponseEntity<MetodoEnvio> editarMetodoEnvio(@PathVariable Integer id, @RequestBody MetodoEnvio metodoEnvio) {
         try {
             metodoEnvioService.guardarMetodoEnvio(metodoEnvio);
             return new ResponseEntity<>(metodoEnvio, HttpStatus.OK);
@@ -76,7 +76,7 @@ public class MetodoEnvioController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar método de envío", description = "Actualiza un método de envío específico por su ID")
+    @Operation(summary = "Actualizar metodo de envio", description = "Actualiza un metodo de envio especifico por su ID")
     public ResponseEntity<MetodoEnvio> actualizarMetodoEnvio(@PathVariable Integer id, @RequestBody MetodoEnvio metodoEnvio){
         try{
             metodoEnvioService.actualizarMetodoEnvio(id, metodoEnvio);
@@ -87,7 +87,7 @@ public class MetodoEnvioController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar método de envío", description = "Elimina un método de envío específico por su ID")
+    @Operation(summary = "Eliminar metodo de envio", description = "Elimina un metodo de envio especifico por su ID")
     public ResponseEntity<String> eliminarMetodoEnvio(@PathVariable Integer id) {
         try {
             metodoEnvioService.eliminarMetodoEnvio(id);

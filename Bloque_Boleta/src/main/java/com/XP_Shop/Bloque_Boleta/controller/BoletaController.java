@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/boleta")
-@Tag(name = "Boleta Controller", description = "Endpoints para la gestión de boletas")
+@Tag(name = "Boleta Controller", description = "Endpoints para la gestion de boletas")
 public class BoletaController {
 
     private final BoletaService boletaService;
@@ -44,6 +44,7 @@ public class BoletaController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar boleta por ID", description = "Obtiene una boleta especifica por su ID")
     public ResponseEntity<BoletaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             BoletaDTO boleta = boletaService.buscarBoletaPorId(id);
@@ -54,6 +55,7 @@ public class BoletaController {
     }
 
     @PostMapping
+    @Operation(summary = "Agregar boleta", description = "Crea una nueva boleta")
     public ResponseEntity<Boleta> agregarBoleta(@Valid @RequestBody Boleta boleta) {
         try {
             boletaService.guardarBoleta(boleta);
@@ -64,6 +66,7 @@ public class BoletaController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Editar boleta", description = "Actualiza una boleta existente")
     public ResponseEntity<Boleta> editarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
             boletaService.actualizarBoleta(id, boleta);
@@ -74,6 +77,7 @@ public class BoletaController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar boleta", description = "Reemplaza una boleta existente")
     public ResponseEntity<Boleta> actualizarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
             boletaService.actualizarBoleta(id, boleta);
@@ -84,6 +88,7 @@ public class BoletaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar boleta", description = "Elimina una boleta existente")
     public ResponseEntity<String> eliminarBoleta(@PathVariable Integer id) {
         try {
             boletaService.eliminarBoleta(id);
