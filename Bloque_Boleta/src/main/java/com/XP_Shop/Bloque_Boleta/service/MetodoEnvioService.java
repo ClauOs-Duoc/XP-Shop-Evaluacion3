@@ -22,7 +22,7 @@ public class MetodoEnvioService {
 
     private final MetodoEnvioRepository metodoEnvioRepository;
 
-    MetodoEnvioService(MetodoEnvioRepository metodoEnvioRepository) {
+    public MetodoEnvioService(MetodoEnvioRepository metodoEnvioRepository) {
         this.metodoEnvioRepository = metodoEnvioRepository;
     }
 

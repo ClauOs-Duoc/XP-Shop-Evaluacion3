@@ -20,7 +20,7 @@ public class BoletaService {
 
     private final BoletaRepository boletaRepository;
 
-    BoletaService(BoletaRepository boletaRepository) {
+    public BoletaService(BoletaRepository boletaRepository) {
         this.boletaRepository = boletaRepository;
     }
 
@@ -51,6 +51,9 @@ public class BoletaService {
     }
 
     public BoletaDTO guardarBoleta(Boleta boleta) {
+        if(boleta.getTotalCompra()<=0){
+            throw new RuntimeException("El total de compra debe ser mayor a cero.");
+        }
         log.info("Guardando nueva boleta");
         Boleta savedBoleta = boletaRepository.save(boleta);
         log.info("Boleta guardada con ID: {}", savedBoleta.getIdBoleta());
@@ -76,6 +79,9 @@ public class BoletaService {
         if (boleta.getDetalleBoleta() != null) {
             boletaExistente.setDetalleBoleta(boleta.getDetalleBoleta());
         }
+        if(boletaExistente.getTotalCompra() <= 0) {
+            throw new RuntimeException("El total de compra debe ser mayor a cero.");
+        }
 
         log.info("Boleta actualizada con ID: {}", id);
         Boleta updatedBoleta = boletaRepository.save(boletaExistente);
@@ -89,7 +95,6 @@ public class BoletaService {
                 log.error("Boleta con ID {} no encontrada para eliminar", id);
                 return new RuntimeException("No se puede eliminar la boleta con ID " + id + " no existe.");
             });
-            new RuntimeException("No se puede eliminar la boleta con ID " + id + " no existe.");
         boletaRepository.delete(boleta);
         log.info("Boleta con ID {} eliminada exitosamente", id);
         return null;

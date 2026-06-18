@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -39,8 +38,7 @@ public class DetalleBoleta {
     @JoinColumn(name = "boleta_id")
     private Boleta boleta;
 
-    @ManyToOne
-    @JoinColumn(name = "productos_id")
-    private Integer id_productos;
+    @Column(name = "productos_id")
+    private Integer productoId;
     
 }

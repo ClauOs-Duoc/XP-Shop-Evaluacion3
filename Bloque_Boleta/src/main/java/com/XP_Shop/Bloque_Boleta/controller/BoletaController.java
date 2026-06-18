@@ -29,18 +29,10 @@ public class BoletaController {
 
     private final BoletaService boletaService;
 
-    BoletaController(BoletaService boletaService) {
+    public BoletaController(BoletaService boletaService) {
         this.boletaService = boletaService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<BoletaDTO>> listarBoleta() {
-        List<BoletaDTO> boleta = boletaService.listarBoleta();
-        if (boleta.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(boleta, HttpStatus.OK);
-    }
     @GetMapping
     @Operation(summary = "Listar todas las boletas", description = "Obtiene una lista de todas las boletas disponibles")
     public ResponseEntity<List<BoletaDTO>> listarBoletas() {
@@ -74,7 +66,7 @@ public class BoletaController {
     @PatchMapping("/{id}")
     public ResponseEntity<Boleta> editarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
-            boletaService.guardarBoleta(boleta);
+            boletaService.actualizarBoleta(id, boleta);
             return new ResponseEntity<>(boleta, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

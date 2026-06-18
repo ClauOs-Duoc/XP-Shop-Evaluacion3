@@ -28,7 +28,7 @@ public class DetalleBoletaController {
 
     private final DetalleBoletaService detalleBoletaService;
 
-    DetalleBoletaController(DetalleBoletaService detalleBoletaService) {
+    public DetalleBoletaController(DetalleBoletaService detalleBoletaService) {
         this.detalleBoletaService = detalleBoletaService;
     }
 
@@ -67,9 +67,9 @@ public class DetalleBoletaController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Editar detalle de boleta", description = "Actualiza un detalle de boleta específico por su ID")
-    public ResponseEntity<DetalleBoleta> editarRegiom(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta) {
+    public ResponseEntity<DetalleBoleta> editarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta) {
         try {
-            detalleBoletaService.guardarDetalleBoleta(detalleBoleta);
+            detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
             return new ResponseEntity<>(detalleBoleta, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

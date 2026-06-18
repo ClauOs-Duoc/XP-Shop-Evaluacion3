@@ -33,9 +33,8 @@ public class Boleta {
     @NotNull(message = "Es obligatorio llenar este apartado")
     @Column(nullable = false)
     private Double totalCompra;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_Id")
+    
+    @Column(name = "usuario_Id")
     private Integer id_usuario;
 
     @ManyToOne
@@ -46,8 +45,7 @@ public class Boleta {
     @JoinColumn(name = "metodoPago_Id")
     private MetodoPago metodoPago;
 
-    @OneToOne
-    @JoinColumn(name = "detalleBoleta_id")
+    @OneToOne(mappedBy = "boleta")
     private DetalleBoleta detalleBoleta;
     
 }

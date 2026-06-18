@@ -22,7 +22,7 @@ public class MetodoPagoService {
 
     private final MetodoPagoRepository metodoPagoRepository;
 
-    MetodoPagoService(MetodoPagoRepository metodoPagoRepository) {
+    public MetodoPagoService(MetodoPagoRepository metodoPagoRepository) {
         this.metodoPagoRepository = metodoPagoRepository;
     }
 

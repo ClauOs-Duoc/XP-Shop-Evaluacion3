@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Boleta.dto.DetalleBoletaDTO;
@@ -22,7 +21,7 @@ public class DetalleBoletaService {
 
     private final DetalleBoletaRepository detalleBoletaRepository;
 
-    DetalleBoletaService(DetalleBoletaRepository detalleBoletaRepository) {
+    public DetalleBoletaService(DetalleBoletaRepository detalleBoletaRepository) {
         this.detalleBoletaRepository = detalleBoletaRepository;
     }
 
@@ -32,7 +31,7 @@ public class DetalleBoletaService {
         dto.setCantidad(detalleBoleta.getCantidad());
         dto.setSubtotal(detalleBoleta.getSubtotal());
         dto.setBoleta(detalleBoleta.getBoleta().getIdBoleta());
-        dto.setProductos(detalleBoleta.getProductos().getIdProducto());
+        dto.setProductos(detalleBoleta.getProductoId());
 
         return dto;
     }
@@ -71,8 +70,8 @@ public class DetalleBoletaService {
         if (detalleBoleta.getBoleta() != null) {
             detalleBoletaExistente.setBoleta(detalleBoleta.getBoleta());
         }
-        if (detalleBoleta.getProductos() != null) {
-            detalleBoletaExistente.setProductos(detalleBoleta.getProductos());
+        if (detalleBoleta.getProductoId() != null) {
+            detalleBoletaExistente.setProductoId(detalleBoleta.getProductoId());
         }
 
         DetalleBoleta updatedDetalleBoleta = detalleBoletaRepository.save(detalleBoletaExistente);
