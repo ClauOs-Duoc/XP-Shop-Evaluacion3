@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BloqueBoletaApplication<Bloque_Boleta>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.XP_Shop.Bloque_Boleta.BloqueBoletaApplication",
+            "projectName": "Bloque_Boleta",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
