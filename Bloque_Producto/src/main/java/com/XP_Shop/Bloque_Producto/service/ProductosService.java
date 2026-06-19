@@ -43,8 +43,8 @@ public class ProductosService {
         Productos productosExistente = productosRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Los productos no existen."));
 
-        if (productos.getDetalleBoletas() != null) {
-            productosExistente.setDetalleBoletas(productos.getDetalleBoletas());
+        if (productos.getId_detalleBoletas() != null) {
+            productosExistente.setId_detalleBoletas(productos.getId_detalleBoletas());
         }
         if (productos.getProducto() != null) {
             productosExistente.setProducto(productos.getProducto());

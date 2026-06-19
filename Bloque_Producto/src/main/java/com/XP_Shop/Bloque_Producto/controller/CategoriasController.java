@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.XP_Shop.Bloque_Producto.assemblers.CategoriasModelAssemble;
 import com.XP_Shop.Bloque_Producto.model.Categorias;
-import com.XP_Shop.Bloque_Producto.model.Marcas;
 import com.XP_Shop.Bloque_Producto.service.CategoriasService;
 
 @RestController
@@ -70,22 +69,22 @@ public class CategoriasController {
     }
 
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Categorias>> editarCategoria(@PathVariable Integer id, @RequestBody Marcas marcas) {
+    public ResponseEntity<EntityModel<Categorias>> editarCategoria(@PathVariable Integer id, @RequestBody Categorias categorias) {
         try {
-            marcasService.guardarMarcas(marcas);
-            Marcas marcasPatch = marcas;
-            return ResponseEntity.ok(assembler.toModel(marcasPatch));
+            categoriasService.guardarCategorias(categorias);
+            Categorias categoriasPatch = categorias;
+            return ResponseEntity.ok(assembler.toModel(categoriasPatch));
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Marcas>> actualizarMarcas(@PathVariable Integer id, @RequestBody Marcas marcas) {
+    public ResponseEntity<EntityModel<Categorias>> actualizarCategorias(@PathVariable Integer id, @RequestBody Categorias categorias) {
         try{
-            marcasService.actualizarMarcas(id, marcas);
-            Marcas marcasUpdate = marcasService.guardarMarcas(marcas);
-            return ResponseEntity.ok(assembler.toModel(marcasUpdate));
+            categoriasService.actualizarCategorias(id, categorias);
+            Categorias categoriasUpdate = categoriasService.guardarCategorias(categorias);
+            return ResponseEntity.ok(assembler.toModel(categoriasUpdate));
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
