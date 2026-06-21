@@ -19,15 +19,19 @@ import com.XP_Shop.Bloque_Usuario.dto.ComunaDTO;
 import com.XP_Shop.Bloque_Usuario.model.Comuna;
 import com.XP_Shop.Bloque_Usuario.service.ComunaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/comuna")
-
+@Tag(name = "Comunas", description = "Endpoints para gestionar el listado de comunas del sistema")
 public class ComunaController {
 
     @Autowired
     private ComunaService comunaService;
 
     @GetMapping
+    @Operation(summary = "Listar todas las comunas", description = "Te devuelve la lista completa de comunas que hay guardadas")
     public ResponseEntity<List<ComunaDTO>> todasLasComunas() {
         List<ComunaDTO> comuna = comunaService.listarComuna();
         if (comuna.isEmpty()) {
@@ -37,7 +41,8 @@ public class ComunaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComunaDTO> buscarPorId(Integer id){
+    @Operation(summary = "Buscar comuna por ID", description = "obtiene todos los detalles de una comuna usando su ID")
+    public ResponseEntity<ComunaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             ComunaDTO comuna = comunaService.buscarComunaPorId(id);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
@@ -47,6 +52,7 @@ public class ComunaController {
     }
 
     @PostMapping
+    @Operation(summary = "Agregar nueva comuna", description = "Crea una nueva comuna en el sistema")
     public ResponseEntity<Comuna> agregarComuna(@RequestBody Comuna comuna) {
         try {
             comunaService.guardarComuna(comuna);
@@ -57,7 +63,8 @@ public class ComunaController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Comuna> editarRegiom(@PathVariable Integer id, @RequestBody Comuna comuna) {
+    @Operation(summary = "Editar Region existente", description = "Edita Region existente en el sistema")
+    public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
         try {
             comunaService.guardarComuna(comuna);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
@@ -67,16 +74,18 @@ public class ComunaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @RequestBody Comuna comuna){
-        try{
+    @Operation(summary = "Actualizar comuna existente", description = "Actualiza comuna existente en el sistema")
+    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
+        try {
             comunaService.actualizarComuna(id, comuna);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar una comuna", description = "Elimina comuna existente en el sistema")
     public ResponseEntity<String> eliminarComuna(@PathVariable Integer id) {
         try {
             comunaService.eliminarComuna(id);
@@ -85,5 +94,5 @@ public class ComunaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }
