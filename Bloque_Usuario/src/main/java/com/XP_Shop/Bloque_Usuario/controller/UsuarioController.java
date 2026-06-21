@@ -19,16 +19,20 @@ import com.XP_Shop.Bloque_Usuario.dto.UsuarioDTO;
 import com.XP_Shop.Bloque_Usuario.model.Usuario;
 import com.XP_Shop.Bloque_Usuario.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
+@Tag(name = "Usuario", description = "Endpoints para la gestion y control de usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping
+    @Operation(summary = "Listar todos los usuarios", description = "Te trae la lista completa de todos los usuarios registrados en el sistema")
     public ResponseEntity<List<UsuarioDTO>> todosLosUsuario() {
         List<UsuarioDTO> usuario = usuarioService.ListarUsuario();
         if (usuario.isEmpty()) {
@@ -38,7 +42,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Integer id){
+    @Operation(summary = "Buscar por ID", description = "Buscar usuario registrado en el sistema con su ID")
+    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Integer id) {
         try {
             UsuarioDTO usuario = usuarioService.BuscarUsuarioPorId(id);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
@@ -48,6 +53,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @Operation(summary = "Agregar usuario", description = "Agrega un nuevo usuario dentro del sistema")
     public ResponseEntity<Usuario> agregarUsuario(@Valid @RequestBody Usuario usuario) {
         try {
             usuarioService.guardarUsuario(usuario);
@@ -58,7 +64,8 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> editarRegiom(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    @Operation(summary = "Editar datos del usuario", description = "Edita datos del usuario existente en el sistema")
+    public ResponseEntity<Usuario> editarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         try {
             usuarioService.guardarUsuario(usuario);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
@@ -68,16 +75,18 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario){
-        try{
-           usuarioService.actualizarUsuario(id, usuario);
+    @Operation(summary = "Actualizar usuario", description = "Actualiza datos del usuario existente del sistema")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        try {
+            usuarioService.actualizarUsuario(id, usuario);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar usuario", description = "Eliminar usuario permanente del sistema")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Integer id) {
         try {
             usuarioService.EliminarUsuario(id);
