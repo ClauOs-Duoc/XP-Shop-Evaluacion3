@@ -19,6 +19,8 @@ import com.XP_Shop.Bloque_Boleta.model.MetodoPago;
 import com.XP_Shop.Bloque_Boleta.service.MetodoPagoService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -34,6 +36,10 @@ public class MetodoPagoController {
 
     @GetMapping
     @Operation(summary = "Listar todos los metodos de pago", description = "Obtiene una lista de todos los metodos de pago disponibles")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Metodos de pago encontrados"),
+        @ApiResponse(responseCode = "204", description = "No hay metodos de pago disponibles")
+    })
     public ResponseEntity<List<MetodoPagoDTO>> todosLosMetodoPago() {
         List<MetodoPagoDTO> metodoPago = metodoPagoService.listarMetodoPago();
         if (metodoPago.isEmpty()) {
@@ -44,6 +50,10 @@ public class MetodoPagoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar metodo de pago por ID", description = "Obtiene un metodo de pago especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Metodo de pago encontrado"),
+        @ApiResponse(responseCode = "404", description = "Metodo de pago no encontrado")
+    })
     public ResponseEntity<MetodoPagoDTO> buscarPorId(Integer id){
         try {
             MetodoPagoDTO metodoPago = metodoPagoService.buscarMetodoPagoPorId(id);
@@ -55,6 +65,10 @@ public class MetodoPagoController {
 
     @PostMapping
     @Operation(summary = "Agregar metodo de pago", description = "Crea un nuevo metodo de pago")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Metodo de pago creado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta")
+    })
     public ResponseEntity<MetodoPago> agregarMetodoPago(@RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
@@ -66,6 +80,11 @@ public class MetodoPagoController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Editar metodo de pago", description = "Actualiza un metodo de pago especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Metodo de pago actualizado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Metodo de pago no encontrado")
+    })
     public ResponseEntity<MetodoPago> editarMetodoPago(@PathVariable Integer id, @RequestBody MetodoPago metodoPago) {
         try {
             metodoPagoService.guardarMetodoPago(metodoPago);
@@ -77,6 +96,11 @@ public class MetodoPagoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar metodo de pago", description = "Actualiza un metodo de pago especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Metodo de pago actualizado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Metodo de pago no encontrado")
+    })
     public ResponseEntity<MetodoPago> actualizarMetodoPago(@PathVariable Integer id, @RequestBody MetodoPago metodoPago){
         try{
             metodoPagoService.actualizarMetodoPago(id, metodoPago);
@@ -88,6 +112,10 @@ public class MetodoPagoController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar metodo de pago", description = "Elimina un metodo de pago especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Metodo de pago eliminado"),
+        @ApiResponse(responseCode = "404", description = "Metodo de pago no encontrado")
+    })
     public ResponseEntity<String> eliminarMetodoPago(@PathVariable Integer id) {
         try {
             metodoPagoService.eliminarMetodoPago(id);

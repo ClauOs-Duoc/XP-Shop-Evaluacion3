@@ -19,6 +19,8 @@ import com.XP_Shop.Bloque_Boleta.model.Boleta;
 import com.XP_Shop.Bloque_Boleta.service.BoletaService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -45,6 +47,11 @@ public class BoletaController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar boleta por ID", description = "Obtiene una boleta especifica por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Boleta encontrada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Boleta no encontrada")
+    })
     public ResponseEntity<BoletaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             BoletaDTO boleta = boletaService.buscarBoletaPorId(id);
@@ -56,6 +63,10 @@ public class BoletaController {
 
     @PostMapping
     @Operation(summary = "Agregar boleta", description = "Crea una nueva boleta")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Boleta creada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta")
+    })
     public ResponseEntity<Boleta> agregarBoleta(@Valid @RequestBody Boleta boleta) {
         try {
             boletaService.guardarBoleta(boleta);
@@ -67,6 +78,11 @@ public class BoletaController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Editar boleta", description = "Actualiza una boleta existente")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Boleta actualizada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Boleta no encontrada")
+    })
     public ResponseEntity<Boleta> editarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
             boletaService.actualizarBoleta(id, boleta);
@@ -78,6 +94,11 @@ public class BoletaController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar boleta", description = "Reemplaza una boleta existente")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Boleta actualizada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Boleta no encontrada")
+    })
     public ResponseEntity<Boleta> actualizarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
             boletaService.actualizarBoleta(id, boleta);
@@ -89,6 +110,10 @@ public class BoletaController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar boleta", description = "Elimina una boleta existente")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Boleta eliminada"),
+        @ApiResponse(responseCode = "404", description = "Boleta no encontrada")
+    })
     public ResponseEntity<String> eliminarBoleta(@PathVariable Integer id) {
         try {
             boletaService.eliminarBoleta(id);

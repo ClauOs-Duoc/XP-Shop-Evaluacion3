@@ -19,6 +19,8 @@ import com.XP_Shop.Bloque_Boleta.model.DetalleBoleta;
 import com.XP_Shop.Bloque_Boleta.service.DetalleBoletaService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -34,6 +36,10 @@ public class DetalleBoletaController {
 
     @GetMapping
     @Operation(summary = "Listar todos los detalles de boletas", description = "Obtiene una lista de todos los detalles de boletas disponibles")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Detalles de boletas encontrados"),
+        @ApiResponse(responseCode = "204", description = "No hay detalles de boletas disponibles")
+    })
     public ResponseEntity<List<DetalleBoletaDTO>> todosLosDetalleBoleta() {
         List<DetalleBoletaDTO> detalleBoleta = detalleBoletaService.listarDetalleBoleta();
         if (detalleBoleta.isEmpty()) {
@@ -45,6 +51,10 @@ public class DetalleBoletaController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar detalle de boleta por ID", description = "Obtiene un detalle de boleta especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Detalle de boleta encontrado"),
+        @ApiResponse(responseCode = "404", description = "Detalle de boleta no encontrado")
+    })
     public ResponseEntity<DetalleBoletaDTO> buscarPorId(@PathVariable Integer id){
         try {
             DetalleBoletaDTO detalleBoleta = detalleBoletaService.buscarDetalleBoletaPorId(id);
@@ -56,6 +66,10 @@ public class DetalleBoletaController {
 
     @PostMapping
     @Operation(summary = "Agregar detalle de boleta", description = "Crea un nuevo detalle de boleta")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Detalle de boleta creado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta")
+    })
     public ResponseEntity<DetalleBoleta> agregarDetalleBoleta(@RequestBody DetalleBoleta detalleBoleta) {
         try {
             detalleBoletaService.guardarDetalleBoleta(detalleBoleta);
@@ -67,6 +81,11 @@ public class DetalleBoletaController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Editar detalle de boleta", description = "Actualiza un detalle de boleta especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Detalle de boleta actualizado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Detalle de boleta no encontrado")
+    })
     public ResponseEntity<DetalleBoleta> editarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta) {
         try {
             detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
@@ -78,6 +97,11 @@ public class DetalleBoletaController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar detalle de boleta", description = "Actualiza un detalle de boleta especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Detalle de boleta actualizado"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Detalle de boleta no encontrado")
+    })
     public ResponseEntity<DetalleBoleta> actualizarDetalleBoleta(@PathVariable Integer id, @RequestBody DetalleBoleta detalleBoleta){
         try{
             detalleBoletaService.actualizarDetalleBoleta(id, detalleBoleta);
@@ -89,6 +113,10 @@ public class DetalleBoletaController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar detalle de boleta", description = "Elimina un detalle de boleta especifico por su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Detalle de boleta eliminado"),
+        @ApiResponse(responseCode = "404", description = "Detalle de boleta no encontrado")
+    })
     public ResponseEntity<String> eliminarDetalleBoleta(@PathVariable Integer id) {
         try {
             detalleBoletaService.eliminarDetalleBoleta(id);
