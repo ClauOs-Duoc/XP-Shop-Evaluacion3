@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Bloque_Boleta
+  profiles:
+    active: dev
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
