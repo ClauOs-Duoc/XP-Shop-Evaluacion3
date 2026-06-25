@@ -10,28 +10,107 @@ spring:
       server:
         webmvc:
           routes:
-            - id: bloque_boleta
-              uri: lb://jedis
+            - id: bloque_boleta_boleta
+              uri: lb://bloque_boleta
               predicates:
-                - Path=/api/v1/jedis/**, /jedis/api-docs/**
+                - Path=/api/v1/boleta/**, /boleta/api-docs/**
 
-            - id: bloque_producto
-              uri: lb://sables
+            - id: bloque_boleta_detalleboleta
+              uri: lb://bloque_boleta
               predicates:
-                - Path=/api/v1/cristales/**, /cristales/api-docs/**
+                - Path=/api/v1/detalleBoleta/**, /detalleBoleta/api-docs/**
+            
+            - id: bloque_boleta_metodoenvio
+              uri: lb://bloque_boleta
+              predicates:
+                - Path=/api/v1/metodoEnvio/**, /metodoEnvio/api-docs/**
 
-            - id: bloque_usuario
-              uri: lb://sables
+            - id: bloque_boleta_metodopago
+              uri: lb://bloque_boleta
               predicates:
-                - Path=/api/v1/sables/**, /sables/api-docs/**
+                - Path=/api/v1/metodoPago/**, /metodoPago/api-docs/**
+
+            - id: bloque_producto_categoria
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/categoria/**, /categoria/api-docs/**
+
+            - id: bloque_producto_categorias
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/categorias/**, /categorias/api-docs/**
+
+            - id: bloque_producto_imagen
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/imagen/**, /imagen/api-docs/**
+
+            - id: bloque_producto_marca
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/marca/**, /marca/api-docs/**
+
+            - id: bloque_producto_marcas
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/marcas/**, /marcas/api-docs/**
+
+            - id: bloque_producto_producto
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/producto/**, /producto/api-docs/**
+
+            - id: bloque_productos_productos
+              uri: lb://bloque_producto
+              predicates:
+                - Path=/api/v1/productos/**, /producto/api-docs/**
+
+            - id: bloque_usuario_comuna
+              uri: lb://bloque_usuario
+              predicates:
+                - Path=/api/v1/comuna/**, /comuna/api-docs/**
+
+            - id: bloque_usuario_region
+              uri: lb://bloque_usuario
+              predicates:
+                - Path=/api/v1/region/**, /region/api-docs/**
+
+            - id: bloque_usuario_usuario
+              uri: lb://bloque_usuario
+              predicates:
+                - Path=/api/v1/usuario/**, /usuario/api-docs/**
 
 springdoc:
   swagger-ui:
     path: /swagger-ui/index.html
     urls:
-      - name: Microservicio Jedis
-        url: /jedis/api-docs
-      - name: Microservicio Sables
-        url: /sables/api-docs
+      - name: Microservicio Boleta
+        url: /boleta/api-docs
+      - name: Microservicio DetalleBoleta
+        url: /detalleBoleta/api-docs
+      - name: Microservicio MetodoEnvio
+        url: /metodoEnvio/api-docs
+      - name: Microservicio MetodoPago
+        url: /metodoPago/api-docs
+      - name: Microservicio Categoria
+        url: /categoria/api-docs
+      - name: Microservicio Categorias
+        url: /categorias/api-docs
+      - name: Microservicio Imagen
+        url: /imagen/api-docs
+      - name: Microservicio Marca
+        url: /marca/api-docs
+      - name: Microservicio Marcas
+        url: /marcas/api-docs
+      - name: Microservicio Producto
+        url: /producto/api-docs
+      - name: Microservicio Productos
+        url: /productos/api-docs
+      - name: Microservicio Comuna
+        url: /comuna/api-docs
+      - name: Microservicio Region
+        url: /region/api-docs
+      - name: Microservicio Usuario
+        url: /usuario/api-docs
   api-docs:
     enabled: true
