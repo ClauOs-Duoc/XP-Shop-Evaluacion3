@@ -18,4 +18,5 @@ public class swaggerConfig {
                         .description("API para la gestión de boletas en XP Shop"));
     }
 
+    //link del swagger http://localhost:8081/doc/swagger-ui/index.html
 }
