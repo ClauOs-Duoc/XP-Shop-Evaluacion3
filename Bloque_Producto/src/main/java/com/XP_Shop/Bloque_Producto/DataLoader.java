@@ -49,11 +49,20 @@ public class DataLoader implements CommandLineRunner{
         Faker faker = new Faker();
 
         for (int i = 0; i < 3; i++) {
+            Categorias categorias = new Categorias();
+
+            List<Categoria> categorias1 = new ArrayList<>();
+            List<Producto> productos1 = new ArrayList<>();
+
+            categorias.setIdCategorias(i);
+            categorias.setCategoria(categorias1);
+            categorias.setProducto(productos1);
+
             Categoria categoria = new Categoria();
 
             categoria.setIdCategoria(i);
             categoria.setNombreCategoria(faker.company().name());
-            categoria.setCategorias(null);
+            categoria.setCategorias(categorias);
 
             categoriaRepository.save(categoria);
         }
@@ -83,11 +92,22 @@ public class DataLoader implements CommandLineRunner{
         }
 
         for (int i = 0; i < 3; i++) {
+            Marcas marcas = new Marcas();
+
+            List<Marca> marcas1 = new ArrayList<>();
+            List<Producto> productos1 = new ArrayList<>();
+
+            marcas.setIdMarcas(i);
+            marcas.setMarcas(marcas1);
+            marcas.setProductos(productos1);
+
+            marcasRepository.save(marcas);
+
             Marca marca = new Marca();
 
             marca.setIdMarca(i);
             marca.setNombreMarca(faker.company().name());
-            marca.setMarcas(null);
+            marca.setMarcas(marcas);
 
             marcaRepository.save(marca);
         }
