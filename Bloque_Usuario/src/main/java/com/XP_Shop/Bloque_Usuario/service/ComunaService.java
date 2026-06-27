@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Usuario.dto.ComunaDTO;
@@ -21,8 +21,11 @@ public class ComunaService {
 
     private static final Logger log = LoggerFactory.getLogger(ComunaService.class);
 
-    @Autowired
-    private ComunaRepository comunaRepository;
+    private final ComunaRepository comunaRepository;
+
+    ComunaService(ComunaRepository comunaRepository) {
+        this.comunaRepository = comunaRepository;
+    }
 
     private ComunaDTO convertirComunaADTO(Comuna comuna){
         log.info("Convirtiendo comuna a DTO: {}", comuna.getIdComuna());

@@ -2,7 +2,7 @@ package com.XP_Shop.Bloque_Usuario.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,18 +20,28 @@ import com.XP_Shop.Bloque_Usuario.model.Comuna;
 import com.XP_Shop.Bloque_Usuario.service.ComunaService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/comuna")
 @Tag(name = "Comunas", description = "Endpoints para gestionar el listado de comunas del sistema")
 public class ComunaController {
 
-    @Autowired
-    private ComunaService comunaService;
+    private final ComunaService comunaService;
+
+    ComunaController(ComunaService comunaService) {
+        this.comunaService = comunaService;
+    }
 
     @GetMapping
     @Operation(summary = "Listar todas las comunas", description = "Te devuelve la lista completa de comunas que hay guardadas")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de comunas obtenida con exito"),
+        @ApiResponse(responseCode = "204", description = "No hay contenido en la lista")
+    })
     public ResponseEntity<List<ComunaDTO>> todasLasComunas() {
         List<ComunaDTO> comuna = comunaService.listarComuna();
         if (comuna.isEmpty()) {
@@ -42,6 +52,11 @@ public class ComunaController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar comuna por ID", description = "obtiene todos los detalles de una comuna usando su ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Comuna encontrada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Comuna no encontrada")
+    })
     public ResponseEntity<ComunaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             ComunaDTO comuna = comunaService.buscarComunaPorId(id);
@@ -53,7 +68,11 @@ public class ComunaController {
 
     @PostMapping
     @Operation(summary = "Agregar nueva comuna", description = "Crea una nueva comuna en el sistema")
-    public ResponseEntity<Comuna> agregarComuna(@RequestBody Comuna comuna) {
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Comuna creada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta")
+    })
+    public ResponseEntity<Comuna> agregarComuna(@Valid @RequestBody Comuna comuna) {
         try {
             comunaService.guardarComuna(comuna);
             return new ResponseEntity<>(comuna, HttpStatus.CREATED);
@@ -64,7 +83,12 @@ public class ComunaController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Editar Region existente", description = "Edita Region existente en el sistema")
-    public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Comuna actualizada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Comuna no encontrada")
+    })
+    public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @Valid @RequestBody Comuna comuna) {
         try {
             comunaService.guardarComuna(comuna);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
@@ -75,7 +99,12 @@ public class ComunaController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar comuna existente", description = "Actualiza comuna existente en el sistema")
-    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Comuna actualizada"),
+        @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+        @ApiResponse(responseCode = "404", description = "Comuna no encontrada")
+    })
+    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @Valid @RequestBody Comuna comuna) {
         try {
             comunaService.actualizarComuna(id, comuna);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
@@ -86,6 +115,10 @@ public class ComunaController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar una comuna", description = "Elimina comuna existente en el sistema")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Comuna eliminada"),
+        @ApiResponse(responseCode = "404", description = "Comuna no encontrada")
+    })
     public ResponseEntity<String> eliminarComuna(@PathVariable Integer id) {
         try {
             comunaService.eliminarComuna(id);

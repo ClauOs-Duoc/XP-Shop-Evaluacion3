@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Usuario.dto.RegionDTO;
@@ -20,8 +20,11 @@ public class RegionService {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(RegionService.class);
 
-    @Autowired
-    private RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
+
+    RegionService(RegionRepository regionRepository) {
+        this.regionRepository = regionRepository;
+    }
 
     private RegionDTO convertirRegionADTO(Region region){
         log.info("Convirtiendo region a DTO: {}", region.getIdRegion());

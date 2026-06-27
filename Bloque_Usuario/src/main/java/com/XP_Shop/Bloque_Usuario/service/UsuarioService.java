@@ -3,7 +3,7 @@ package com.XP_Shop.Bloque_Usuario.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.XP_Shop.Bloque_Usuario.dto.UsuarioDTO;
@@ -20,8 +20,11 @@ public class UsuarioService {
 
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     private UsuarioDTO convertirUsuarioADTO(Usuario usuario){
         UsuarioDTO dto = new UsuarioDTO();
@@ -29,10 +32,10 @@ public class UsuarioService {
         dto.setNombreUsuario(usuario.getNombreUsuario());
         dto.setCorreo(usuario.getCorreo());
         dto.setFechaNacimiento(usuario.getFechaNacimiento());
-        if (usuario.getBoletas() != null){
+        if (usuario.getId_boletas() != null) {
             List<Integer> boletas = new ArrayList<>();
-            for(Boleta boleta : usuario.getBoletas()){
-                boletas.add(boleta.getIdBoleta());
+            for (Integer boletaId : usuario.getId_boletas()) {
+                boletas.add(boletaId);
             }
             dto.setIdBoleta(boletas);
         }
@@ -81,8 +84,8 @@ public class UsuarioService {
         if (usuario.getFechaNacimiento() != null) {
             usuarioExistente.setFechaNacimiento(usuario.getFechaNacimiento());
         }
-        if (usuario.getBoletas() != null) {
-            usuarioExistente.setBoletas(usuario.getBoletas());
+        if (usuario.getId_boletas() != null) {
+            usuarioExistente.setId_boletas(usuario.getId_boletas());
         }
         if (usuario.getComuna() != null) {
             usuarioExistente.setComuna(usuario.getComuna());
