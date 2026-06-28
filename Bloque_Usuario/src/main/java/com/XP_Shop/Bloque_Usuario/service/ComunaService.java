@@ -1,16 +1,13 @@
 package com.XP_Shop.Bloque_Usuario.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.XP_Shop.Bloque_Usuario.dto.ComunaDTO;
 import com.XP_Shop.Bloque_Usuario.model.Comuna;
-import com.XP_Shop.Bloque_Usuario.model.Usuario;
 import com.XP_Shop.Bloque_Usuario.repository.ComunaRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,55 +18,29 @@ public class ComunaService {
 
     private static final Logger log = LoggerFactory.getLogger(ComunaService.class);
 
-    private final ComunaRepository comunaRepository;
+    @Autowired
+    private ComunaRepository comunaRepository;
 
-    ComunaService(ComunaRepository comunaRepository) {
-        this.comunaRepository = comunaRepository;
-    }
-
-    private ComunaDTO convertirComunaADTO(Comuna comuna){
-        log.info("Convirtiendo comuna a DTO: {}", comuna.getIdComuna());
-        ComunaDTO dto = new ComunaDTO();
-        dto.setIdComuna(comuna.getIdComuna());
-        dto.setNombreComuna(comuna.getNombreComuna());
-        dto.setNombreRegion(comuna.getRegion().getNombreRegion());
-
-        if (comuna.getUsuario() != null){
-            List<String> usuarios = new ArrayList<>();
-            for(Usuario usuario : comuna.getUsuario()){
-                usuarios.add(usuario.getNombreUsuario());
-            }
-            dto.setNombreUsuarios(usuarios);
-        }
-
-        return dto;
-    }
-
-    public List<ComunaDTO> listarComuna() {
+    public List<Comuna> listaComuna() {
         log.info("Listando todas las comunas");
-        return comunaRepository.findAll().stream()
-                    .map(this::convertirComunaADTO)
-                    .toList();
+        return comunaRepository.findAll();
     }
-    
-    public ComunaDTO buscarComunaPorId(Integer id) {
+
+    public Comuna buscarComunaPorId(Integer id) {
         log.info("Buscando comuna por ID: {}", id);
-        Comuna comuna = comunaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Comuna no encontrado"));
-        return convertirComunaADTO(comuna);
+        return comunaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("La comuna no existe."));
     }
 
-    public ComunaDTO guardarComuna(Comuna comuna) {
-        log.info("Guardando comuna: {}", comuna.getNombreComuna());
-        Comuna savedComuna = comunaRepository.save(comuna);
-        log.info("Comuna guardada con ID: {}", savedComuna.getIdComuna());
-        return convertirComunaADTO(savedComuna);
+    public Comuna guardarComuna(Comuna comuna) {
+        return comunaRepository.save(comuna);
     }
 
-    public ComunaDTO actualizarComuna(Integer id, Comuna comuna) {
+    public Comuna actualizarComuna(Integer id, Comuna comuna) {
         log.info("Actualizando comuna con ID: {}", id);
         Comuna comunaExistente = comunaRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("La comuna no existe."));
+
         if (comuna.getNombreComuna() != null) {
             comunaExistente.setNombreComuna(comuna.getNombreComuna());
         }
@@ -80,18 +51,21 @@ public class ComunaService {
             comunaExistente.setUsuario(comuna.getUsuario());
         }
 
-        Comuna updatedComuna = comunaRepository.save(comunaExistente);
-        log.info("Comuna actualizada con ID: {}", updatedComuna.getIdComuna());
-        return convertirComunaADTO(updatedComuna);
+        log.info("Comuna actualizada con ID: {}", id);
+        return comunaRepository.save(comunaExistente);
     }
 
-    public Void eliminarComuna(Integer id) {
+    public String eliminarComuna(Integer id) {
         log.info("Eliminando comuna con ID: {}", id);
-        Comuna comuna = comunaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("No se puede eliminar la comuna con ID " + id + " no existe."));
-        comunaRepository.delete(comuna);
-        log.info("Comuna eliminada con ID: {}", id);
-        return null;
+        try {
+            Comuna comuna = comunaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se puede eliminar la comuna con ID " + id + " no existe."));
+            comunaRepository.delete(comuna);
+            log.info("Comuna eliminada con ID: {}", id);
+            return "La comuna ha sido eliminada correctamente.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
     }
-    
+
 }

@@ -2,7 +2,7 @@ package com.XP_Shop.Bloque_Usuario.controller;
 
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.XP_Shop.Bloque_Usuario.dto.RegionDTO;
+
 import com.XP_Shop.Bloque_Usuario.model.Region;
 import com.XP_Shop.Bloque_Usuario.service.RegionService;
 
@@ -30,11 +30,8 @@ import jakarta.validation.Valid;
 @Tag(name = "Region", description = "Endpoints para manejar el listado de regiones")
 public class RegionController {
 
-    private final RegionService regionService;
-
-    RegionController(RegionService regionService) {
-        this.regionService = regionService;
-    }
+    @Autowired
+    private  RegionService regionService;
 
     @GetMapping
     @Operation(summary = "Listar todas las regiones", description = "Te devuelve la lista completa de regiones que hay guardadas")
@@ -42,8 +39,8 @@ public class RegionController {
         @ApiResponse(responseCode = "200", description = "Lista de regiones obtenida con exito"),
         @ApiResponse(responseCode = "204", description = "No hay contenido en la lista")
     })
-    public ResponseEntity<List<RegionDTO>> todasLasRegiones() {
-        List<RegionDTO> region = regionService.listarRegion();
+    public ResponseEntity<List<Region>> todasLasRegiones() {
+        List<Region> region = regionService.listaRegion();
         if (region.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -57,9 +54,9 @@ public class RegionController {
         @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
         @ApiResponse(responseCode = "404", description = "Region no encontrada")
     })
-    public ResponseEntity<RegionDTO> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<Region> buscarPorId(@PathVariable Integer id) {
         try {
-            RegionDTO region = regionService.buscarRegionPorId(id);
+            Region region = regionService.buscarRegionPorId(id);
             return new ResponseEntity<>(region, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
