@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.XP_Shop.Bloque_Producto.dto.DetalleBoletaExternoDTO;
 import com.XP_Shop.Bloque_Producto.model.Productos;
 import com.XP_Shop.Bloque_Producto.repository.ProductosRepository;
 
@@ -21,6 +22,9 @@ public class ProductosService {
     @Autowired
     private ProductosRepository productosRepository;
 
+    @Autowired
+    private ProductosValidations productosValidations;
+
     public List<Productos> listaProductos() {
         return productosRepository.findAll();
     }
@@ -33,9 +37,7 @@ public class ProductosService {
 
     public Productos guardarProductos(Productos productos) {
         log.info("Guardando productos: {}", productos.getProducto());
-        Productos savedProductos = productosRepository.save(productos);
-        log.info("Productos guardados con ID: {}", savedProductos.getIdProductos());
-        return savedProductos;
+        return productosRepository.save(productos);
     }
 
     public Productos actualizarProductos(Integer id, Productos productos) {
@@ -49,8 +51,7 @@ public class ProductosService {
         if (productos.getProducto() != null) {
             productosExistente.setProducto(productos.getProducto());
         }
-        
-        log.info("Productos actualizados con ID: {}", id);
+
         return productosRepository.save(productosExistente);
     }
 
@@ -58,13 +59,17 @@ public class ProductosService {
         log.info("Eliminando productos con ID: {}", id);
         try {
             Productos productos = productosRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se puede eliminar los productos con ID" + id + " no existe."));
+                .orElseThrow(() -> new RuntimeException("No se puede eliminar, el producto con ID " + id + " no existe."));
             productosRepository.delete(productos);
-            log.info("Productos eliminados con ID: {}", id);
             return "Los productos han sido eliminados correctamente.";
         } catch (RuntimeException e) {
             return e.getMessage();
         }
+    }
+
+    public DetalleBoletaExternoDTO obtenerDetalleDeProduto(Integer idDetalle) {
+        log.info("Obteniendo detalle boleta con ID: {}", idDetalle);
+        return productosValidations.obtenerDetalleBoleta(idDetalle);
     }
     
 }

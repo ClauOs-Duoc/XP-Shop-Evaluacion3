@@ -1,4 +1,6 @@
 spring:
+  main:
+    web-application-type: servlet
   flyway:
     enabled: 'true'
     baseline-on-migrate: 'true'
