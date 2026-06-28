@@ -11,5 +11,5 @@ public class BloqueUsuarioApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BloqueUsuarioApplication.class, args);
 	}
-
+	
 }

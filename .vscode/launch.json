@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BloqueUsuarioApplication",
+            "request": "launch",
+            "mainClass": "com.XP_Shop.Bloque_Usuario.BloqueUsuarioApplication",
+            "projectName": "Bloque_Usuario"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-BloqueBoletaApplication<Bloque_Boleta>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

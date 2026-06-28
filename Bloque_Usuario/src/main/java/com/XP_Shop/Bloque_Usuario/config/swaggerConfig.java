@@ -18,3 +18,6 @@ public class swaggerConfig {
                         .description("API para la gestión de usuarios en XP Shop"));
     }
 }
+
+// LINK DEL SWAGGER http://localhost:1837/doc/swagger-ui/index.html
+// http://localhost:34931/doc/swagger-ui/index.html

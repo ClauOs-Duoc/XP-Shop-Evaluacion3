@@ -2,7 +2,7 @@ package com.XP_Shop.Bloque_Usuario.controller;
 
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.XP_Shop.Bloque_Usuario.dto.UsuarioDTO;
 import com.XP_Shop.Bloque_Usuario.model.Usuario;
 import com.XP_Shop.Bloque_Usuario.service.UsuarioService;
 
@@ -30,11 +29,8 @@ import jakarta.validation.Valid;
 @Tag(name = "Usuario", description = "Endpoints para la gestion y control de usuarios")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
-
-    UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping
     @Operation(summary = "Listar todos los usuarios", description = "Te devuelve la lista completa de usuarios que hay guardados")
@@ -42,8 +38,8 @@ public class UsuarioController {
         @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida con exito"),
         @ApiResponse(responseCode = "204", description = "No hay contenido en la lista")
     })
-    public ResponseEntity<List<UsuarioDTO>> todosLosUsuarios() {
-        List<UsuarioDTO> usuario = usuarioService.ListarUsuario();
+    public ResponseEntity<List<Usuario>> todosLosUsuarios() {
+        List<Usuario> usuario = usuarioService.listaUsuario();
         if (usuario.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -57,9 +53,9 @@ public class UsuarioController {
         @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })
-    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable Integer id) {
         try {
-            UsuarioDTO usuario = usuarioService.BuscarUsuarioPorId(id);
+            Usuario usuario = usuarioService.buscarUsuarioPorId(id);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -114,15 +110,15 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar un usuario", description = "Elimina usuario existente en el sistema")
+    @Operation(summary = "Eliminar un usuario", description = "Elimina un usuario existente en el sistema")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuario eliminado"),
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })
     public ResponseEntity<String> eliminarUsuario(@PathVariable Integer id) {
         try {
-            usuarioService.EliminarUsuario(id);
-            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+            String mensaje = usuarioService.eliminarUsuario(id);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

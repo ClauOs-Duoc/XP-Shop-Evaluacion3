@@ -1,7 +1,8 @@
 package com.XP_Shop.Bloque_Usuario.model;
 
 import java.time.LocalDate;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +30,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
 
-    @NotBlank (message = "Es obligatorio llenar este apartado")
+    @NotBlank(message = "Es obligatorio llenar este apartado")
     @Size(min = 2, max = 100, message = "Debe llenar el apartado con entre 2 y 100 caracteres")
     @Column(nullable = false, length = 100)
     private String nombreUsuario;
@@ -42,12 +42,11 @@ public class Usuario {
 
     @Column(nullable = false)
     private LocalDate fechaNacimiento;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Integer> id_boletas;
+    
 
     @ManyToOne
     @JoinColumn(name = "comuna_Id")
+    @JsonIgnoreProperties("usuarios")
     private Comuna comuna;
     
 }
