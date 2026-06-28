@@ -1,22 +1,21 @@
 package com.XP_Shop.Bloque_Producto.services;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
- 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
  
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
  
@@ -43,7 +42,7 @@ public class ProductosApplicationTest {
         Productos productos = new Productos();
         productos.setIdProductos(id);
         productos.setProducto(new ArrayList<>());
-        productos.setId_detalleBoletas(new ArrayList<>());
+        productos.setId_detalleBoletas(id);
         return productos;
     }
  
@@ -117,9 +116,8 @@ public class ProductosApplicationTest {
  
         Productos datosNuevos = new Productos();
         List<Producto> nuevosProductos = new ArrayList<>();
-        List<Integer> nuevosDetalles = new ArrayList<>();
         datosNuevos.setProducto(nuevosProductos);
-        datosNuevos.setId_detalleBoletas(nuevosDetalles);
+        datosNuevos.setId_detalleBoletas(id);
  
         Productos productosActualizado = crearProductosFalso(id);
  

@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BloqueProductoApplication",
+            "request": "launch",
+            "mainClass": "com.XP_Shop.Bloque_Producto.BloqueProductoApplication",
+            "projectName": "Bloque_Producto"
+        },
+        {
+            "type": "java",
+            "name": "GatewayApplication",
+            "request": "launch",
+            "mainClass": "com.jedi.gateway.GatewayApplication",
+            "projectName": "gateway"
+        },
+        {
+            "type": "java",
+            "name": "EurekaApplication",
+            "request": "launch",
+            "mainClass": "com.example.xp_shop.eureka.EurekaApplication",
+            "projectName": "eureka"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-BloqueBoletaApplication<Bloque_Boleta>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

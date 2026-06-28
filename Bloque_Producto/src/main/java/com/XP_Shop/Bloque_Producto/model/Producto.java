@@ -66,7 +66,7 @@ public class Producto {
     @JoinColumn(name = "productos_id")
     private Productos productos;
 
-    @OneToMany(mappedBy = "imagen_id")
+    @OneToMany(mappedBy = "producto")
     private List<Imagen> imagenes;
     
 }

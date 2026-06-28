@@ -2,6 +2,7 @@ package com.XP_Shop.Bloque_Producto.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class Productos {
     @OneToMany(mappedBy = "productos")
     private List<Producto> producto;
  
-    @OneToMany(mappedBy = "productos")
-    private List<Integer> id_detalleBoletas;
+    @Column(name = "id_detalle_boleta")
+    private Integer id_detalleBoletas;
     
 }

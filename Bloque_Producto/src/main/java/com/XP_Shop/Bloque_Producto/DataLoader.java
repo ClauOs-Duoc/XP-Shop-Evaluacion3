@@ -157,11 +157,10 @@ public class DataLoader implements CommandLineRunner{
             Productos productos = new Productos();
 
             List<Producto> productos1 = new ArrayList<>();
-            List<Integer> detallesBoletas = new ArrayList<>();
 
             productos.setIdProductos(i);
             productos.setProducto(productos1);
-            productos.setId_detalleBoletas(detallesBoletas);
+            productos.setId_detalleBoletas(6);
 
             productosRepository.save(productos);
         }

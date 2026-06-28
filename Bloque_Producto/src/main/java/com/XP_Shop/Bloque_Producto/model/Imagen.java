@@ -31,7 +31,7 @@ public class Imagen {
     private String nombreImagen;
 
     @ManyToOne
-    @JoinColumn(name = "productoId")
+    @JoinColumn(name = "producto")
     private Producto producto;
     
 }
