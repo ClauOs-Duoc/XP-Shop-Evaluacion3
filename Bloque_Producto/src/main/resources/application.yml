@@ -29,4 +29,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 server:
+<<<<<<< HEAD
   port: '8082'
+=======
+  port: '8084'
+>>>>>>> 6508bcc3ed87e8b34b41b02887d44ff8d4344df5
