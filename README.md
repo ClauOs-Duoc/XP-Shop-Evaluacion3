@@ -28,23 +28,26 @@ Microservicios implementados
 
 Bloque_Usuario
 Este microservicio permite administrar la información de los usuarios del sistema.
-Se implementaron las operaciones CRUD para registrar, consultar, actualizar y eliminar usuarios. Además, se conectó a una base de datos MySQL utilizando Spring Data JPA y quedó registrado en Eureka para ser descubierto por el Gateway.
+Se implementaron las operaciones CRUD para registrar, consultar, actualizar y eliminar usuarios. Además, se conectó a una base de datos MySQL utilizando Spring Data JPA y quedó registrado en Eureka para ser descubierto por el Gateway. Hecho por Tomas Gallegos.
 
 Bloque_Producto
 Este servicio se encarga de la gestión de productos.
-Permite crear, listar, modificar y eliminar productos mediante endpoints REST. También utiliza Spring Data JPA para acceder a la base de datos y se registra automáticamente en Eureka.
+Permite crear, listar, modificar y eliminar productos mediante endpoints REST. También utiliza Spring Data JPA para acceder a la base de datos y se registra automáticamente en Eureka. Hecho por Claudio Osorio.
 
 Bloque_Boleta
 Este microservicio administra las boletas generadas por el sistema.
-Se desarrollaron los endpoints necesarios para crear y consultar boletas, almacenando la información en MySQL. Al igual que los demás servicios, se registra en Eureka para que pueda ser consumido mediante el Gateway.
+Se desarrollaron los endpoints necesarios para crear y consultar boletas, almacenando la información en MySQL. Al igual que los demás servicios, se registra en Eureka para que pueda ser consumido mediante el Gateway. Matias Meza.
 
 API Gateway
 Se implementó un API Gateway utilizando Spring Cloud Gateway.
 Su función es recibir todas las solicitudes del cliente y redirigirlas automáticamente al microservicio correspondiente, evitando acceder directamente a cada servicio.
-También se configuraron las rutas mediante el archivo application.yml utilizando el descubrimiento automático de Eureka.
+También se configuraron las rutas mediante el archivo application.yml utilizando el descubrimiento automático de Eureka. Claudio Osorio.
 
 Eureka Server
 Se implementó un servidor Eureka para registrar todos los microservicios.
-Cada servicio se conecta automáticamente al iniciar la aplicación, permitiendo que el Gateway encuentre los microservicios sin necesidad de configurar manualmente sus direcciones.
+Cada servicio se conecta automáticamente al iniciar la aplicación, permitiendo que el Gateway encuentre los microservicios sin necesidad de configurar manualmente sus direcciones. Claudio Osorio.
 
 los puertos son los siguientes:
+http://localhost:8081/doc/swagger-ui/index.html
+http://localhost:8082/doc/swagger-ui/index.html
+http://localhost:8083/doc/swagger-ui/index.html
