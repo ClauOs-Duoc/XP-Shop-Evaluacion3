@@ -2,7 +2,13 @@
     "configurations": [
         {
             "type": "java",
-<<<<<<< HEAD
+            "name": "BloqueUsuarioApplication",
+            "request": "launch",
+            "mainClass": "com.XP_Shop.Bloque_Usuario.BloqueUsuarioApplication",
+            "projectName": "Bloque_Usuario"
+        },
+        {
+            "type": "java",
             "name": "BloqueProductoApplication",
             "request": "launch",
             "mainClass": "com.XP_Shop.Bloque_Producto.BloqueProductoApplication",
@@ -21,12 +27,6 @@
             "request": "launch",
             "mainClass": "com.example.xp_shop.eureka.EurekaApplication",
             "projectName": "eureka"
-=======
-            "name": "BloqueUsuarioApplication",
-            "request": "launch",
-            "mainClass": "com.XP_Shop.Bloque_Usuario.BloqueUsuarioApplication",
-            "projectName": "Bloque_Usuario"
->>>>>>> 4fd021dd3d662a91195580f47142c3beebd9d91c
         },
         {
             "type": "java",
